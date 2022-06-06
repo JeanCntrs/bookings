@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/JeanCntrs/bookings/pkg/config"
+	"github.com/JeanCntrs/bookings/pkg/models"
 	"github.com/JeanCntrs/bookings/pkg/render"
 )
 
@@ -28,9 +29,12 @@ func NewHandlers(r *Repository) {
 }
 
 func (rep *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "home.page.html")
+	render.RenderTemplate(w, "home.page.html", &models.TemplateData{})
 }
 
 func (rep *Repository) About(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "about.page.html")
+	stringMap := make(map[string]string)
+	stringMap["test"] = "Hello, again."
+
+	render.RenderTemplate(w, "about.page.html", &models.TemplateData{StringMap: stringMap})
 }
