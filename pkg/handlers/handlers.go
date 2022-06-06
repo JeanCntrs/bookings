@@ -25,7 +25,6 @@ func NewRepo(a *config.AppConfig) *Repository {
 // NewHandlers sets the repository for new handlers
 func NewHandlers(r *Repository) {
 	Repo = r
-
 }
 
 func (rep *Repository) Home(w http.ResponseWriter, r *http.Request) {
