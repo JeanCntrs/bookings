@@ -28,13 +28,19 @@ func NewHandlers(r *Repository) {
 	Repo = r
 }
 
-func (rep *Repository) Home(w http.ResponseWriter, r *http.Request) {
+func (rp *Repository) Home(w http.ResponseWriter, r *http.Request) {
+	remoteIp := r.RemoteAddr
+	rp.App.Session.Put(r.Context(), "remoteIp", remoteIp)
+
 	render.RenderTemplate(w, "home.page.html", &models.TemplateData{})
 }
 
-func (rep *Repository) About(w http.ResponseWriter, r *http.Request) {
+func (rp *Repository) About(w http.ResponseWriter, r *http.Request) {
 	stringMap := make(map[string]string)
 	stringMap["test"] = "Hello, again."
+
+	remoteIp := rp.App.Session.GetString(r.Context(), "remoteIp")
+	stringMap["remoteIp"] = remoteIp
 
 	render.RenderTemplate(w, "about.page.html", &models.TemplateData{StringMap: stringMap})
 }
