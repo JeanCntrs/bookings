@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/JeanCntrs/bookings/pkg/config"
-	"github.com/JeanCntrs/bookings/pkg/handlers"
+	"github.com/JeanCntrs/bookings/internal/config"
+	"github.com/JeanCntrs/bookings/internal/handlers"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )

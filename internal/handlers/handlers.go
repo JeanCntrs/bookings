@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/JeanCntrs/bookings/pkg/config"
-	"github.com/JeanCntrs/bookings/pkg/models"
-	"github.com/JeanCntrs/bookings/pkg/render"
+	"github.com/JeanCntrs/bookings/internal/config"
+	"github.com/JeanCntrs/bookings/internal/models"
+	"github.com/JeanCntrs/bookings/internal/render"
 )
 
 // Repository is the repository type
