@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/JeanCntrs/bookings/internal/config"
+	"github.com/JeanCntrs/bookings/internal/forms"
 	"github.com/JeanCntrs/bookings/internal/models"
 	"github.com/JeanCntrs/bookings/internal/render"
 )
@@ -50,7 +51,9 @@ func (rp *Repository) About(w http.ResponseWriter, r *http.Request) {
 
 // Reservation renders the make a reservation page and display form
 func (rp *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "make-reservation.page.html", &models.TemplateData{})
+	render.RenderTemplate(w, r, "make-reservation.page.html", &models.TemplateData{
+		Form: forms.New(nil),
+	})
 }
 
 // PostReservation handles the posting of a reservation form
