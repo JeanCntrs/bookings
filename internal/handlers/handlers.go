@@ -53,6 +53,11 @@ func (rp *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "make-reservation.page.html", &models.TemplateData{})
 }
 
+// PostReservation handles the posting of a reservation form
+func (rp *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+
+}
+
 // Generals renders the room page
 func (rp *Repository) Generals(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "generals.page.html", &models.TemplateData{})
