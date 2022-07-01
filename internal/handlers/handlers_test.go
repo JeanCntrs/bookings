@@ -44,6 +44,7 @@ var theTests = []struct {
 
 func TestHandlers(t *testing.T) {
 	routes := getRoutes()
+
 	ts := httptest.NewTLSServer(routes)
 	defer ts.Close()
 
