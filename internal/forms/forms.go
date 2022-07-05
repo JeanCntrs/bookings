@@ -25,9 +25,9 @@ func New(data url.Values) *Form {
 
 // Has checks if form field is in post and not empty
 func (f *Form) Has(field string, r *http.Request) bool {
-	x := r.Form.Get(field)
+	x := f.Get(field)
 
-	return x == ""
+	return x != ""
 }
 
 // Valid returns true if there are no errors, otherwise false
