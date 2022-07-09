@@ -18,6 +18,7 @@ var testApp config.AppConfig
 
 func TestMain(m *testing.M) {
 	// what am i going to put in the session
+
 	gob.Register(models.Reservation{})
 
 	// change this to true when in production
