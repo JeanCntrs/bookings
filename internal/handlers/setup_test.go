@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"testing"
 	"time"
 
 	"github.com/JeanCntrs/bookings/internal/config"
@@ -43,7 +44,7 @@ func sessionLoad(next http.Handler) http.Handler {
 	return session.LoadAndSave(next)
 }
 
-func getRoutes() http.Handler {
+func TestMain(m *testing.M) {
 	// what am i going to put in the session
 	gob.Register(models.Reservation{})
 
@@ -72,10 +73,14 @@ func getRoutes() http.Handler {
 	app.TemplateCache = tc
 	app.UseCache = true
 
-	repo := NewRepo(&app)
+	repo := NewTestingRepo(&app)
 	NewHandlers(repo)
 	render.NewRenderer(&app)
 
+	os.Exit(m.Run())
+}
+
+func getRoutes() http.Handler {
 	mux := chi.NewRouter()
 
 	mux.Use(middleware.Recoverer)
