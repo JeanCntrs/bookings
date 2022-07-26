@@ -255,6 +255,21 @@ func (rp *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 
 // AvailabilityJSON handles request for availability and send JSON response
 func (rp *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
+	// need to parse request body
+	err := r.ParseForm()
+	if err != nil {
+		// can't parse form, so return appropiate json
+		resp := jsonResponse{
+			OK:      false,
+			Message: "Internal server error",
+		}
+
+		out, _ := json.MarshalIndent(resp, "", "     ")
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(out)
+		return
+	}
+
 	sd := r.Form.Get("start")
 	ed := r.Form.Get("end")
 
@@ -264,7 +279,18 @@ func (rp *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 
 	roomID, _ := strconv.Atoi(r.Form.Get("room_id"))
 
-	available, _ := rp.DB.SearchAvailabilityByDatesVyRoomID(startDate, endDate, roomID)
+	available, err := rp.DB.SearchAvailabilityByDatesVyRoomID(startDate, endDate, roomID)
+	if err != nil {
+		resp := jsonResponse{
+			OK:      false,
+			Message: "Error connecting to database",
+		}
+
+		out, _ := json.MarshalIndent(resp, "", "     ")
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(out)
+		return
+	}
 
 	resp := jsonResponse{
 		OK:        available,
