@@ -52,3 +52,17 @@ func (pdb *testDBRepo) GetRoomByID(id int) (models.Room, error) {
 
 	return room, nil
 }
+
+func (pdb *testDBRepo) GetUserByID(id int) (models.User, error) {
+	var u models.User
+
+	return u, nil
+}
+
+func (pdb *testDBRepo) UpdateUser(u models.User) error {
+	return nil
+}
+
+func (pdb *testDBRepo) Authenticate(email, testPassword string) (int, string, error) {
+	return 1, "", nil
+}
