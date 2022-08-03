@@ -446,8 +446,14 @@ func (rp *Repository) PostShowLogin(w http.ResponseWriter, r *http.Request) {
 
 	form := forms.New(r.PostForm)
 	form.Required("email", "password")
+	form.IsEmail("email")
+
 	if !form.Valid() {
-		// TODO - take user back to page
+		render.Template(w, r, "login.page.html", &models.TemplateData{
+			Form: form,
+		})
+
+		return
 	}
 
 	id, _, err := rp.DB.Authenticate(email, password)
@@ -462,4 +468,12 @@ func (rp *Repository) PostShowLogin(w http.ResponseWriter, r *http.Request) {
 	rp.App.Session.Put(r.Context(), "user_id", id)
 	rp.App.Session.Put(r.Context(), "flash", "Logged in successfully")
 	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+// Logout logs a user out
+func (rp *Repository) Logout(w http.ResponseWriter, r *http.Request) {
+	_ = rp.App.Session.Destroy(r.Context())
+	_ = rp.App.Session.RenewToken(r.Context())
+
+	http.Redirect(w, r, "/user/login", http.StatusSeeOther)
 }
