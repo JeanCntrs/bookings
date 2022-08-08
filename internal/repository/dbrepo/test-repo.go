@@ -72,3 +72,9 @@ func (pdb *testDBRepo) AllReservations() ([]models.Reservation, error) {
 
 	return reservations, nil
 }
+
+func (pdb *testDBRepo) AllNewReservations() ([]models.Reservation, error) {
+	var reservations []models.Reservation
+
+	return reservations, nil
+}
