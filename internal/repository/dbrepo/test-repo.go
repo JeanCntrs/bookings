@@ -78,3 +78,9 @@ func (pdb *testDBRepo) AllNewReservations() ([]models.Reservation, error) {
 
 	return reservations, nil
 }
+
+func (pdb *testDBRepo) GetReservationByID(id int) (models.Reservation, error) {
+	var res models.Reservation
+
+	return res, nil
+}
