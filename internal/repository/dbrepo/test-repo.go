@@ -84,3 +84,15 @@ func (pdb *testDBRepo) GetReservationByID(id int) (models.Reservation, error) {
 
 	return res, nil
 }
+
+func (pdb *testDBRepo) UpdateReservation(r models.Reservation) error {
+	return nil
+}
+
+func (pdb *testDBRepo) DeleteReservation(id int) error {
+	return nil
+}
+
+func (pdb *testDBRepo) UpdateProcessedForReservation(id, processed int) error {
+	return nil
+}
