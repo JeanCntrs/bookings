@@ -102,3 +102,9 @@ func (pdb *testDBRepo) AllRooms() ([]models.Room, error) {
 
 	return rooms, nil
 }
+
+func (pdb *testDBRepo) GetRestrictionsForRoomByDate(roomID int, start, end time.Time) ([]models.RoomRestriction, error) {
+	var restrictions []models.RoomRestriction
+
+	return restrictions, nil
+}

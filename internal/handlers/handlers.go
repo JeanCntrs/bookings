@@ -565,6 +565,41 @@ func (rp *Repository) AdminReservationsCalendar(w http.ResponseWriter, r *http.R
 
 	data["rooms"] = rooms
 
+	for _, v := range rooms {
+		// create maps
+		reservationMap := make(map[string]int)
+		blockMap := make(map[string]int)
+
+		for d := firstOfMonth; d.After(lastOfMonth) == false; d = d.AddDate(0, 0, 1) {
+			reservationMap[d.Format("2006-01-2")] = 0
+			blockMap[d.Format("2006 -01-2")] = 0
+		}
+
+		// get all the restrictions for the current room
+		restrictions, err := rp.DB.GetRestrictionsForRoomByDate(v.ID, firstOfMonth, lastOfMonth)
+		if err != nil {
+			helpers.ServerError(w, err)
+			return
+		}
+
+		for _, x := range restrictions {
+			if x.ReservationID > 0 {
+				// it's a reservation
+				for d := x.StartDate; d.After(x.EndDate) == false; d = d.AddDate(0, 0, 1) {
+					reservationMap[d.Format("2006-01-2")] = x.ReservationID
+				}
+			} else {
+				// it's a block
+				blockMap[x.StartDate.Format("2006-01-2")] = x.RestrictionID
+			}
+		}
+
+		data[fmt.Sprintf("reservation_map_%d", v.ID)] = reservationMap
+		data[fmt.Sprintf("block_map_%d", v.ID)] = blockMap
+
+		rp.App.Session.Put(r.Context(), fmt.Sprintf("block_map_%d", v.ID), blockMap)
+	}
+
 	render.Template(w, r, "admin-reservations-calendar.page.html", &models.TemplateData{
 		StringMap: stringMap,
 		Data:      data,
