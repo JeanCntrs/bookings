@@ -64,7 +64,11 @@ func (pdb *testDBRepo) UpdateUser(u models.User) error {
 }
 
 func (pdb *testDBRepo) Authenticate(email, testPassword string) (int, string, error) {
-	return 1, "", nil
+	if email == "me@here.ca" {
+		return 1, "", nil
+	}
+
+	return 0, "", errors.New("some error")
 }
 
 func (pdb *testDBRepo) AllReservations() ([]models.Reservation, error) {
