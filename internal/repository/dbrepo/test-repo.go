@@ -108,3 +108,11 @@ func (pdb *testDBRepo) GetRestrictionsForRoomByDate(roomID int, start, end time.
 
 	return restrictions, nil
 }
+
+func (pdb *testDBRepo) InsertBlockForRoom(id int, startDate time.Time) error {
+	return nil
+}
+
+func (pdb *testDBRepo) DeleteBlockByID(id int) error {
+	return nil
+}
