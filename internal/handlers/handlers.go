@@ -138,6 +138,13 @@ func (rp *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	room, err := rp.DB.GetRoomByID(roomID)
+	if err != nil {
+		rp.App.Session.Put(r.Context(), "error", "invalid data!")
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
 	reservation := models.Reservation{
 		FirstName: r.Form.Get("first_name"),
 		LastName:  r.Form.Get("last_name"),
@@ -146,6 +153,7 @@ func (rp *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		StartDate: startDate,
 		EndDate:   endDate,
 		RoomID:    roomID,
+		Room:      room,
 	}
 
 	form := forms.New(r.PostForm)
